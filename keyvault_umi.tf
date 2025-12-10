@@ -7,8 +7,8 @@ resource "azurerm_resource_group" "this" {
 
 ## user assigned managed identity
 module "umi" {
-  source  = "Azure/avm-res-managedidentity-userassignedidentity/azurerm"
-  version = "0.3.4"
+  source              = "Azure/avm-res-managedidentity-userassignedidentity/azurerm"
+  version             = "0.3.4"
   location            = azurerm_resource_group.this.location
   name                = "demoumi"
   resource_group_name = azurerm_resource_group.this.name
@@ -21,22 +21,21 @@ module "keyvault" {
   source  = "Azure/avm-res-keyvault-vault/azurerm"
   version = "0.10.2"
 
-  location = azurerm_resource_group.this.location
-  name                = "demokeyvault"
+  location            = azurerm_resource_group.this.location
+  name                = "demobdokv1234"
   resource_group_name = azurerm_resource_group.this.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
+  tenant_id           = "00000000-0000-0000-0000-000000000000"
   enable_telemetry    = false
   legacy_access_policies = {
     test = {
       object_id               = module.umi.principal_id
       secret_permissions      = ["Get", "List"]
-      key_permissions         = ["Get", "List"]
       certificate_permissions = ["Get", "List"]
     }
   }
   network_acls = {
-    bypass   = "AzureServices"
+    bypass = "AzureServices"
   }
-  public_network_access_enabled = true  
+  public_network_access_enabled  = true
   legacy_access_policies_enabled = true
 }
