@@ -1,3 +1,4 @@
+# uncommment backend azurerm block to use remote tfstate
 terraform {
   required_version = "~> 1.12"
   required_providers {
@@ -6,7 +7,7 @@ terraform {
       version = "~> 4.0"
     }
   }
-  backend "azurerm" {}
+  # backend "azurerm" {}
 }
 
 provider "azurerm" {
@@ -16,4 +17,5 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = false
     }
   }
+  subscription_id = "00000000-0000-0000-0000-000000000000"
 }
